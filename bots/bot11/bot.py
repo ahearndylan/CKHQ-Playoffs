@@ -1,5 +1,5 @@
 import tweepy
-from nba_api.stats.endpoints import commonplayoffseries, boxscoretraditionalv2
+from nba_api.stats.endpoints import playoffpicture
 from datetime import datetime
 import json
 import os
@@ -44,38 +44,38 @@ def save_posted_series(posted):
 
 def get_finished_series():
     try:
-        playoff_data = commonplayoffseries.CommonPlayoffSeries().get_normalized_dict()
-        series_list = playoff_data["Series"]
+        playoff_data = playoffpicture.PlayoffPicture().get_normalized_dict()
+        east = playoff_data.get("eastConfPlayoffPicture", [])
+        west = playoff_data.get("westConfPlayoffPicture", [])
 
         finished = []
-        for series in series_list:
-            if series["IF_NECESSARY"] == 0 and series["SERIES_STATUS_TEXT"]:
-                status = series["SERIES_STATUS_TEXT"]
-                if "wins" in status.lower() or "won" in status.lower():
-                    finished.append({
-                        "series_id": series["SERIES_ID"],
-                        "winner": series["HOME_TEAM_ABBREVIATION"] if series["HOME_TEAM_WINS"] > series["VISITOR_TEAM_WINS"] else series["VISITOR_TEAM_ABBREVIATION"],
-                        "loser": series["VISITOR_TEAM_ABBREVIATION"] if series["HOME_TEAM_WINS"] > series["VISITOR_TEAM_WINS"] else series["HOME_TEAM_ABBREVIATION"]
-                    })
+
+        for series in east + west:
+            if series.get("Clinched") == "Y":
+                finished.append({
+                    "series_id": str(series["SeedNum"]) + series["Conference"] + str(series["TeamID"]),
+                    "team_name": series["TeamCity"] + " " + series["TeamName"]
+                })
+
         return finished
 
     except Exception as e:
-        print("Error fetching playoff series:", e)
+        print("Error fetching playoff picture:", e)
         return []
 
-def get_series_top_players(series_id):
-    # This will fetch stats across all games for a given series
-    # Right now we'll fake some players because nba_api doesn't have direct series summary
-    # You could extend this by manually fetching each game_id in the series later if needed
-    return [
-        {"name": "Example Player 1", "stat": "30.5 PPG"},
-        {"name": "Example Player 2", "stat": "10.2 RPG"},
-        {"name": "Example Player 3", "stat": "8.3 APG"}
-    ]
 
-def compose_tweet(winner, loser, series_record, top_players):
+def get_series_top_players(series_id):
+    # Placeholder players for now
+    return {
+        "scoring": {"name": "Example Player 1", "stat": "30.5 PPG"},
+        "rebounding": {"name": "Example Player 2", "stat": "10.2 RPG"},
+        "assists": {"name": "Example Player 3", "stat": "8.3 APG"},
+        "defense": {"name": "Example Player 4", "stat": "2.1 STL+BLK"}
+    }
+
+def compose_tweet(team_name, top_players):
     tweet = f"""👑 Court Kings – Series Royalty 👑
-🏆 {winner} def. {loser} {series_record}
+🏆 {team_name} advance to the next round!
 
 🔥 Scoring King: {top_players['scoring']['name']} – {top_players['scoring']['stat']}
 💪 Rebounding Beast: {top_players['rebounding']['name']} – {top_players['rebounding']['stat']}
@@ -83,9 +83,7 @@ def compose_tweet(winner, loser, series_record, top_players):
 🛡️ Defensive Anchor: {top_players['defense']['name']} – {top_players['defense']['stat']}
 
 #NBAPlayoffs #CourtKingsHQ"""
-    
     return tweet
-
 
 # ======================= #
 #         MAIN RUN        #
@@ -96,21 +94,21 @@ def run_bot():
 
     finished_series = get_finished_series()
     if not finished_series:
-        print("🛑 No playoff series have finished yet. Check back soon!")
+        print("🔝 No playoff series have finished yet. Check back soon!")
         return
 
     posted = load_posted_series()
 
     for series in finished_series:
         if series["series_id"] in posted:
-            continue  # already posted about this series
+            continue  # already posted about this team
 
         top_players = get_series_top_players(series["series_id"])
-        tweet = compose_tweet(series["winner"], series["loser"], top_players)
+        tweet = compose_tweet(series["team_name"], top_players)
 
         print("\n" + tweet + "\n")
 
-        # 🚀 Uncomment this when you are ready to tweet for real:
+        # Uncomment to post live:
         # client.create_tweet(text=tweet)
 
         posted.append(series["series_id"])
