@@ -1,6 +1,6 @@
 import tweepy
-from nba_api.stats.endpoints import playoffpicture
-from datetime import datetime
+from nba_api.stats.endpoints import leaguegamefinder, boxscoretraditionalv2
+from datetime import datetime, timedelta
 import json
 import os
 import time
@@ -8,11 +8,11 @@ import time
 # ======================= #
 # TWITTER AUTHENTICATION  #
 # ======================= #
-bearer_token = "YOUR_BEARER_TOKEN"
-api_key = "YOUR_API_KEY"
-api_secret = "YOUR_API_SECRET"
-access_token = "YOUR_ACCESS_TOKEN"
-access_token_secret = "YOUR_ACCESS_TOKEN_SECRET"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAAPztzwEAAAAAvBGCjApPNyqj9c%2BG7740SkkTShs%3DTCpOQ0DMncSMhaW0OA4UTPZrPRx3BHjIxFPzRyeoyMs2KHk6hM"
+api_key = "uKyGoDr5LQbLvu9i7pgFrAnBr"
+api_secret = "KGBVtj1BUmAEsyoTmZhz67953ItQ8TIDcChSpodXV8uGMPXsoH"
+access_token = "1901441558596988929-WMdEPOtNDj7QTJgLHVylxnylI9ObgD"
+access_token_secret = "9sf83R8A0MBdijPdns6nWaG7HF47htcWo6oONPmMS7o98"
 
 client = tweepy.Client(
     bearer_token=bearer_token,
@@ -32,7 +32,10 @@ def load_posted_series():
     if not os.path.exists(POSTED_FILE):
         return []
     with open(POSTED_FILE, "r") as f:
-        return json.load(f)
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
 
 def save_posted_series(posted):
     with open(POSTED_FILE, "w") as f:
@@ -42,45 +45,110 @@ def save_posted_series(posted):
 #     MAIN BOT LOGIC      #
 # ======================= #
 
-def get_finished_series():
-    try:
-        playoff_data = playoffpicture.PlayoffPicture().get_normalized_dict()
-        east = playoff_data.get("eastConfPlayoffPicture", [])
-        west = playoff_data.get("westConfPlayoffPicture", [])
+def get_recent_playoff_games(days_back=7):
+    today = datetime.today()
+    start_date = (today - timedelta(days=days_back)).strftime("%m/%d/%Y")
 
-        finished = []
+    print(f"\n📅 Checking playoff games since {start_date}...")
 
-        for series in east + west:
-            if series.get("Clinched") == "Y":
-                finished.append({
-                    "series_id": str(series["SeedNum"]) + series["Conference"] + str(series["TeamID"]),
-                    "team_name": series["TeamCity"] + " " + series["TeamName"]
-                })
+    gamefinder = leaguegamefinder.LeagueGameFinder(
+        season_type_nullable="Playoffs",
+        date_from_nullable=start_date
+    )
 
-        return finished
+    games = gamefinder.get_normalized_dict()["LeagueGameFinderResults"]
 
-    except Exception as e:
-        print("Error fetching playoff picture:", e)
-        return []
+    return games
+
+def track_series(games):
+    series = {}
+
+    for game in games:
+        team = game["TEAM_ABBREVIATION"]
+        matchup = game["MATCHUP"]
+        result = game["WL"]
+
+        opponents = matchup.replace("@", "vs.").split("vs.")
+        team1 = opponents[0].strip()
+        team2 = opponents[1].strip()
+        matchup_key = f"{team1} vs {team2}" if team1 < team2 else f"{team2} vs {team1}"
+
+        if matchup_key not in series:
+            series[matchup_key] = {"teams": (team1, team2), "games": [], team1: 0, team2: 0}
+
+        if result == "W":
+            series[matchup_key][team] += 1
+
+        # Save game ID for later boxscore pulling
+        series[matchup_key]["games"].append(game["GAME_ID"])
+
+    return series
+
+def calculate_series_leaders(game_ids):
+    player_stats = {}
+
+    for game_id in game_ids:
+        try:
+            time.sleep(0.5)  # Be nice to NBA API
+            boxscore = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=game_id)
+            players = boxscore.get_normalized_dict()["PlayerStats"]
+
+            for p in players:
+                name = p["PLAYER_NAME"]
+                pts = p["PTS"] or 0
+                reb = p["REB"] or 0
+                ast = p["AST"] or 0
+                stl = p["STL"] or 0
+                blk = p["BLK"] or 0
 
 
-def get_series_top_players(series_id):
-    # Placeholder players for now
-    return {
-        "scoring": {"name": "Example Player 1", "stat": "30.5 PPG"},
-        "rebounding": {"name": "Example Player 2", "stat": "10.2 RPG"},
-        "assists": {"name": "Example Player 3", "stat": "8.3 APG"},
-        "defense": {"name": "Example Player 4", "stat": "2.1 STL+BLK"}
+                if name not in player_stats:
+                    player_stats[name] = {"points": 0, "rebounds": 0, "assists": 0, "stocks": 0, "games": 0}
+
+                player_stats[name]["points"] += pts
+                player_stats[name]["rebounds"] += reb
+                player_stats[name]["assists"] += ast
+                player_stats[name]["stocks"] += (stl + blk)
+                player_stats[name]["games"] += 1
+
+        except Exception as e:
+            print(f"⚠️ Error pulling boxscore for {game_id}: {e}")
+
+    leaders = {
+        "scoring": {"name": "", "stat": 0},
+        "rebounding": {"name": "", "stat": 0},
+        "assists": {"name": "", "stat": 0},
+        "defense": {"name": "", "stat": 0}
     }
 
-def compose_tweet(team_name, top_players):
-    tweet = f"""👑 Court Kings – Series Royalty 👑
-🏆 {team_name} advance to the next round!
+    for player, stats in player_stats.items():
+        games_played = stats["games"]
+        if games_played == 0:
+            continue
 
-🔥 Scoring King: {top_players['scoring']['name']} – {top_players['scoring']['stat']}
-💪 Rebounding Beast: {top_players['rebounding']['name']} – {top_players['rebounding']['stat']}
-🎯 Assist Maestro: {top_players['assists']['name']} – {top_players['assists']['stat']}
-🛡️ Defensive Anchor: {top_players['defense']['name']} – {top_players['defense']['stat']}
+        ppg = stats["points"] / games_played
+        rpg = stats["rebounds"] / games_played
+        apg = stats["assists"] / games_played
+        spg = stats["stocks"] / games_played
+
+        if ppg > leaders["scoring"]["stat"]:
+            leaders["scoring"] = {"name": player, "stat": round(ppg, 1)}
+        if rpg > leaders["rebounding"]["stat"]:
+            leaders["rebounding"] = {"name": player, "stat": round(rpg, 1)}
+        if apg > leaders["assists"]["stat"]:
+            leaders["assists"] = {"name": player, "stat": round(apg, 1)}
+        if spg > leaders["defense"]["stat"]:
+            leaders["defense"] = {"name": player, "stat": round(spg, 1)}
+
+    return leaders
+
+def compose_tweet(team_name, opponent, top_players):
+    tweet = f"""🏆 {team_name} defeat {opponent} to advance! 👑
+
+🔥 Scoring King: {top_players['scoring']['name']} – {top_players['scoring']['stat']} PPG
+💪 Rebounding Beast: {top_players['rebounding']['name']} – {top_players['rebounding']['stat']} RPG
+🎯 Assist Maestro: {top_players['assists']['name']} – {top_players['assists']['stat']} APG
+🛡️ Defensive Anchor: {top_players['defense']['name']} – {top_players['defense']['stat']} STL+BLK
 
 #NBAPlayoffs #CourtKingsHQ"""
     return tweet
@@ -92,26 +160,35 @@ def compose_tweet(team_name, top_players):
 def run_bot():
     print("🤖 Running Series Royalty Bot...")
 
-    finished_series = get_finished_series()
-    if not finished_series:
-        print("🔝 No playoff series have finished yet. Check back soon!")
-        return
+    games = get_recent_playoff_games()
+    series = track_series(games)
 
     posted = load_posted_series()
 
-    for series in finished_series:
-        if series["series_id"] in posted:
-            continue  # already posted about this team
+    for matchup_key, info in series.items():
+        team1, team2 = info["teams"]
+        team1_wins = info[team1]
+        team2_wins = info[team2]
+        game_ids = info["games"]
 
-        top_players = get_series_top_players(series["series_id"])
-        tweet = compose_tweet(series["team_name"], top_players)
+        if matchup_key in posted:
+            continue  # Already posted
+
+        if team1_wins == 4:
+            winner, loser = team1, team2
+        elif team2_wins == 4:
+            winner, loser = team2, team1
+        else:
+            continue  # No clinch yet
+
+        top_players = calculate_series_leaders(game_ids)
+        tweet = compose_tweet(winner, loser, top_players)
 
         print("\n" + tweet + "\n")
 
-        # Uncomment to post live:
-        # client.create_tweet(text=tweet)
+        client.create_tweet(text=tweet)
 
-        posted.append(series["series_id"])
+        posted.append(matchup_key)
         save_posted_series(posted)
 
 if __name__ == "__main__":
