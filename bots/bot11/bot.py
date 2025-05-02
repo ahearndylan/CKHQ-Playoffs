@@ -45,11 +45,11 @@ def save_posted_series(posted):
 #     MAIN BOT LOGIC      #
 # ======================= #
 
-def get_recent_playoff_games(days_back=7):
+def get_recent_playoff_games(days_back=14):  # ✅ increased from 7 to 14
     today = datetime.today()
     start_date = (today - timedelta(days=days_back)).strftime("%m/%d/%Y")
 
-    print(f"\n📅 Checking playoff games since {start_date}...")
+    print(f"\n📅 Checking playoff games from the last {days_back} days (since {start_date})...\n")
 
     gamefinder = leaguegamefinder.LeagueGameFinder(
         season_type_nullable="Playoffs",
@@ -101,7 +101,6 @@ def calculate_series_leaders(game_ids):
                 stl = p["STL"] or 0
                 blk = p["BLK"] or 0
 
-
                 if name not in player_stats:
                     player_stats[name] = {"points": 0, "rebounds": 0, "assists": 0, "stocks": 0, "games": 0}
 
@@ -142,8 +141,8 @@ def calculate_series_leaders(game_ids):
 
     return leaders
 
-def compose_tweet(team_name, opponent, top_players):
-    tweet = f"""🏆 {team_name} defeat {opponent} to advance! 👑
+def compose_tweet(team_name, opponent, top_players, winner_wins, loser_wins):
+    tweet = f"""🏆 {team_name} defeat {opponent} {winner_wins}-{loser_wins} to advance! 👑
 
 🔥 Scoring King: {top_players['scoring']['name']} – {top_players['scoring']['stat']} PPG
 💪 Rebounding Beast: {top_players['rebounding']['name']} – {top_players['rebounding']['stat']} RPG
@@ -152,6 +151,7 @@ def compose_tweet(team_name, opponent, top_players):
 
 #NBAPlayoffs #CourtKingsHQ"""
     return tweet
+
 
 # ======================= #
 #         MAIN RUN        #
@@ -162,7 +162,6 @@ def run_bot():
 
     games = get_recent_playoff_games()
     series = track_series(games)
-
     posted = load_posted_series()
 
     for matchup_key, info in series.items():
@@ -171,25 +170,35 @@ def run_bot():
         team2_wins = info[team2]
         game_ids = info["games"]
 
+        print(f"🧮 {matchup_key} — {team1} {team1_wins} vs {team2} {team2_wins}")
+
         if matchup_key in posted:
-            continue  # Already posted
+            print(f"✅ Already posted: {matchup_key}")
+            continue
 
         if team1_wins == 4:
             winner, loser = team1, team2
         elif team2_wins == 4:
             winner, loser = team2, team1
         else:
-            continue  # No clinch yet
+            print(f"⏳ Series still in progress: {matchup_key}")
+            continue
+
+        print(f"🎉 {winner} has won the series over {loser}!")
 
         top_players = calculate_series_leaders(game_ids)
-        tweet = compose_tweet(winner, loser, top_players)
+        winner_wins = info[winner]
+        loser_wins = info[loser]
+        tweet = compose_tweet(winner, loser, top_players, winner_wins, loser_wins)
 
-        print("\n" + tweet + "\n")
+        print("\n📝 Final tweet to post:\n")
+        print(tweet + "\n")
 
         client.create_tweet(text=tweet)
 
         posted.append(matchup_key)
         save_posted_series(posted)
+
 
 if __name__ == "__main__":
     run_bot()
