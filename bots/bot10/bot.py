@@ -41,9 +41,18 @@ def get_today_event(events):
     return random.choice(todays_events) if todays_events else None
 
 def compose_tweet(event):
-    today = datetime.now()
-    today_str = today.strftime("%B %d, %Y")
-    return f"🏀 On This Day – {today_str}\n\n{event['event']}\n\n#NBAPlayoffs #CourtKingsHQ #OTD"
+    # Parse date components
+    today_date = datetime.strptime(event["date"], "%B %d")
+    full_date = today_date.strftime("%B %d")
+    year = event["year"]
+
+    return f"""🏀 On This Day - NBA Playoff History  
+🗓️ {full_date}, {year}
+
+{event['event']}
+
+#NBAPlayoffs #OTD #CourtKingsHQ"""
+
 
 def run_bot():
     events = load_events()

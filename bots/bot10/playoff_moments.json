@@ -1,74 +1,92 @@
 [
   {
     "date": "May 7",
+    "year": 1995,
     "event": "Reggie Miller scores 8 points in 9 seconds to stun the Knicks in 1995."
   },
   {
     "date": "May 11",
+    "year": 1987,
     "event": "Magic Johnson's 'junior, junior sky hook' beats Celtics in 1987 NBA Finals Game 4."
   },
   {
     "date": "May 14",
+    "year": 1997,
     "event": "John Stockton hits a buzzer-beating three to send Jazz to first NBA Finals in 1997."
   },
   {
     "date": "May 16",
+    "year": 1987,
     "event": "Larry Bird steals the inbound pass and assists Dennis Johnson for the game-winner in 1987 Eastern Conference Finals Game 5."
   },
   {
     "date": "May 29",
+    "year": 1997,
     "event": "Michael Jordan's 'Flu Game' leads Bulls to victory in 1997 NBA Finals Game 5."
   },
   {
     "date": "June 4",
+    "year": 1976,
     "event": "Triple-overtime thriller as Celtics defeat Suns in 1976 NBA Finals Game 5."
   },
   {
     "date": "June 5",
+    "year": 1980,
     "event": "Magic Johnson fills in at center, scores 42 points to lead Lakers to championship in 1980 NBA Finals Game 6."
   },
   {
     "date": "June 6",
+    "year": 1991,
     "event": "Michael Jordan's iconic switch-hand layup against Lakers in 1991 NBA Finals Game 2."
   },
   {
     "date": "June 9",
+    "year": 1970,
     "event": "Jerry West hits a 60-foot shot to force overtime in 1970 NBA Finals Game 3."
   },
   {
     "date": "June 10",
+    "year": 2001,
     "event": "Allen Iverson scores 48 points and steps over Tyronn Lue in 2001 NBA Finals Game 1."
   },
   {
     "date": "June 12",
+    "year": 1994,
     "event": "Hakeem Olajuwon blocks John Starks' shot to secure Rockets' championship in 1994 NBA Finals Game 6."
   },
   {
     "date": "June 13",
+    "year": 2019,
     "event": "Kawhi Leonard leads Raptors to their first NBA title in 2019 NBA Finals Game 6."
   },
   {
     "date": "June 14",
+    "year": 2013,
     "event": "Ray Allen's clutch three-pointer forces overtime in 2013 NBA Finals Game 6."
   },
   {
     "date": "June 15",
+    "year": 2015,
     "event": "Warriors clinch their first title in 40 years in 2015 NBA Finals Game 6."
   },
   {
     "date": "June 16",
-    "event": "Cavaliers complete 3–1 comeback to win 2016 NBA Finals Game 7."
+    "year": 2016,
+    "event": "Cavaliers complete 3\u20131 comeback to win 2016 NBA Finals Game 7."
   },
   {
     "date": "June 19",
+    "year": 2019,
     "event": "Raptors win their first NBA championship in 2019 NBA Finals Game 6."
   },
   {
     "date": "June 20",
+    "year": 2011,
     "event": "Dirk Nowitzki leads Mavericks to 2011 NBA championship over Heat in Game 6."
   },
   {
     "date": "June 21",
+    "year": 1998,
     "event": "Michael Jordan clinches his sixth championship with Bulls in 1998 NBA Finals Game 6."
   }
 ]
