@@ -1,52 +1,74 @@
 [
-    { "date": "April 20", "event": "Michael Jordan drops 63 points vs. Celtics in 1986 – most points ever in a playoff game! 🐐🔥" },
-    { "date": "April 22", "event": "Damian Lillard buries 37-footer to eliminate Thunder in 2019 – 50-point night! 🏹👋" },
-    { "date": "April 23", "event": "LeBron James scores 45 points and 9 rebounds vs. Pacers in 2018 to force Game 7! 👑🚀" },
-    { "date": "April 24", "event": "Allen Iverson drops 54 points vs. Raptors in 2001 East Semis Game 2! ✨🔨" },
-    { "date": "April 25", "event": "Derrick Rose becomes youngest MVP ever at 22 years old (2011 playoffs). 🌹🏆" },
-    { "date": "April 26", "event": "Kobe Bryant scores 50+ points in back-to-back playoff games in 2007 vs. Suns! 🐍🔥" },
-    { "date": "April 29", "event": "Reggie Miller nails clutch 3 to beat Bulls in 1998 East Finals Game 4! 🏀🚀" },
-    { "date": "April 30", "event": "Ray Allen drains iconic corner 3 to save Heat vs. Spurs in 2013 Finals Game 6! 🎯🏆" },
-    { "date": "May 2", "event": "Magic Johnson posts 42 PTS, 15 REB, 7 AST filling in at center in 1980 Finals Game 6! 🪄👑" },
-    { "date": "May 3", "event": "Dirk Nowitzki scores 48 points on 12–15 shooting vs. Thunder in 2011 WCF! 🏹🔥" },
-    { "date": "May 5", "event": "LeBron hits off-balance buzzer-beater to beat Raptors in 2018 East Semis! ⏰👑" },
-    { "date": "May 6", "event": "Kawhi Leonard's buzzer-beater rolls around rim before sinking Sixers in 2019! 🎯🥶" },
-    { "date": "May 7", "event": "Damian Lillard hits series-winning 3 vs. Rockets at the buzzer (2014)! 🚀🏀" },
-    { "date": "May 8", "event": "Kevin Durant scores 50 points to close out Clippers in 2019 Round 1! ⚡🔥" },
-    { "date": "May 10", "event": "Robert Horry drills game-winner vs. Kings in 2002 WCF Game 4 – 'Big Shot Bob'! 🎯🏀" },
-    { "date": "May 12", "event": "Giannis drops 50 points in Game 6 to clinch 2021 NBA title for Bucks! 🏆🦌" },
-    { "date": "May 13", "event": "Kobe Bryant pours in 48 points vs. Kings in 2001 playoffs sweep! 🐍🎯" },
-    { "date": "May 14", "event": "Charles Barkley drops 56 points on 23–31 shooting vs. Warriors in 1994! 🌟🔥" },
-    { "date": "May 15", "event": "Reggie Miller scores 8 points in 9 seconds to shock Knicks in 1995! 🏀💥" },
-    { "date": "May 16", "event": "Stephen Curry hits 9 threes, scores 37 points vs. Blazers in 2019 WCF! 🎯🔥" },
-    { "date": "May 17", "event": "Shaq dominates with 46 points vs. Kings in 2001 Semis Game 1! 💪🏀" },
-    { "date": "May 18", "event": "LeBron scores 48 of Cavs’ final 50 points vs. Pistons in 2007 ECF Game 5! 👑🔥" },
-    { "date": "May 19", "event": "Jason Kidd leads Nets to second straight Finals berth in 2003! 🏀🚀" },
-    { "date": "May 20", "event": "Jimmy Butler scores 56 points to beat Bucks in 2023 first round! 🏹🔥" },
-    { "date": "May 21", "event": "Kareem Abdul-Jabbar scores 40 points in 1974 Finals Game 6 vs. Celtics! 🏆✊" },
-    { "date": "May 22", "event": "Tim Duncan nails wild buzzer-beater vs. Suns in 2008 playoffs! ⏰💥" },
-    { "date": "May 24", "event": "Kawhi Leonard shuts down Giannis in 2019 ECF comeback for Raptors! 🛡️🔥" },
-    { "date": "May 25", "event": "Kevin Garnett leads Celtics to 2008 Finals – 'Anything is possible!' 🍀🏆" },
-    { "date": "May 26", "event": "Larry Bird steals the inbound to win Game 5 vs. Pistons (1987)! 🦅🎯" },
-    { "date": "May 27", "event": "Allen Iverson steps over Tyronn Lue after drilling clutch jumper (2001 Finals)! 🐍🔥" },
-    { "date": "May 28", "event": "Draymond Green triple-doubles to lead Warriors past Cavs in 2015 Finals Game 1! 🛡️🏀" },
-    { "date": "May 29", "event": "Michael Jordan's heroic 'Flu Game' – 38 points, 7 rebounds in 1997 Finals Game 5! 🤒🏆" },
-    { "date": "May 30", "event": "Dirk Nowitzki leads wild comeback vs. Thunder in 2011 WCF! ⚡🔥" },
-    { "date": "June 1", "event": "Magic Johnson dominates as rookie center – 42–15–7 line in 1980 Finals Game 6! 🪄🏆" },
-    { "date": "June 2", "event": "Stephen Curry sinks 9 threes in 2018 Finals Game 2 vs. Cavs! 🎯🏀" },
-    { "date": "June 3", "event": "Klay Thompson scores 41 points and 11 threes to save Warriors in 2016 Game 6! 🔥💦" },
-    { "date": "June 5", "event": "LeBron scores 51 points in 2018 Finals Game 1 – JR Smith forgets the score! 👑🤦" },
-    { "date": "June 6", "event": "Scottie Pippen slams huge dunk over Patrick Ewing in 1994 playoffs! 🛫🔨" },
-    { "date": "June 8", "event": "Jimmy Butler drops 47 points to force Game 7 vs. Celtics in 2023 ECF! 🏹🔥" },
-    { "date": "June 9", "event": "Kevin Durant hits dagger 3-pointer over LeBron to seal Game 3 (2017 Finals)! 🏀🔥" },
-    { "date": "June 10", "event": "Shaq dominates Pacers with 41 points and 12 rebounds in 2000 Finals Game 1! 🦍🏆" },
-    { "date": "June 12", "event": "Hakeem Olajuwon leads Rockets to second straight NBA title in 1995! 🚀🏆" },
-    { "date": "June 13", "event": "Kawhi Leonard wins Finals MVP, leading Raptors to 2019 title! 🏆🛡️" },
-    { "date": "June 14", "event": "Ray Allen's 3 saves Heat's title hopes in Game 6 vs. Spurs (2013)! 🎯🔥" },
-    { "date": "June 15", "event": "Warriors win first title of Curry era – 2015 NBA Champs! 🏆⚡" },
-    { "date": "June 16", "event": "LeBron leads Cavs' legendary 3–1 comeback vs. 73-win Warriors (2016)! 👑🏆" },
-    { "date": "June 18", "event": "Dennis Rodman grabs 19 rebounds vs. Sonics in 1996 Finals Game 2! 🛡️🔥" },
-    { "date": "June 19", "event": "Toronto Raptors win first NBA championship in franchise history (2019)! 🍁🏆" },
-    { "date": "June 20", "event": "Dirk Nowitzki leads Mavericks to 2011 NBA Championship over Heat! 🏆🔥" }
-  ]
-  
+  {
+    "date": "May 7",
+    "event": "Reggie Miller scores 8 points in 9 seconds to stun the Knicks in 1995."
+  },
+  {
+    "date": "May 11",
+    "event": "Magic Johnson's 'junior, junior sky hook' beats Celtics in 1987 NBA Finals Game 4."
+  },
+  {
+    "date": "May 14",
+    "event": "John Stockton hits a buzzer-beating three to send Jazz to first NBA Finals in 1997."
+  },
+  {
+    "date": "May 16",
+    "event": "Larry Bird steals the inbound pass and assists Dennis Johnson for the game-winner in 1987 Eastern Conference Finals Game 5."
+  },
+  {
+    "date": "May 29",
+    "event": "Michael Jordan's 'Flu Game' leads Bulls to victory in 1997 NBA Finals Game 5."
+  },
+  {
+    "date": "June 4",
+    "event": "Triple-overtime thriller as Celtics defeat Suns in 1976 NBA Finals Game 5."
+  },
+  {
+    "date": "June 5",
+    "event": "Magic Johnson fills in at center, scores 42 points to lead Lakers to championship in 1980 NBA Finals Game 6."
+  },
+  {
+    "date": "June 6",
+    "event": "Michael Jordan's iconic switch-hand layup against Lakers in 1991 NBA Finals Game 2."
+  },
+  {
+    "date": "June 9",
+    "event": "Jerry West hits a 60-foot shot to force overtime in 1970 NBA Finals Game 3."
+  },
+  {
+    "date": "June 10",
+    "event": "Allen Iverson scores 48 points and steps over Tyronn Lue in 2001 NBA Finals Game 1."
+  },
+  {
+    "date": "June 12",
+    "event": "Hakeem Olajuwon blocks John Starks' shot to secure Rockets' championship in 1994 NBA Finals Game 6."
+  },
+  {
+    "date": "June 13",
+    "event": "Kawhi Leonard leads Raptors to their first NBA title in 2019 NBA Finals Game 6."
+  },
+  {
+    "date": "June 14",
+    "event": "Ray Allen's clutch three-pointer forces overtime in 2013 NBA Finals Game 6."
+  },
+  {
+    "date": "June 15",
+    "event": "Warriors clinch their first title in 40 years in 2015 NBA Finals Game 6."
+  },
+  {
+    "date": "June 16",
+    "event": "Cavaliers complete 3–1 comeback to win 2016 NBA Finals Game 7."
+  },
+  {
+    "date": "June 19",
+    "event": "Raptors win their first NBA championship in 2019 NBA Finals Game 6."
+  },
+  {
+    "date": "June 20",
+    "event": "Dirk Nowitzki leads Mavericks to 2011 NBA championship over Heat in Game 6."
+  },
+  {
+    "date": "June 21",
+    "event": "Michael Jordan clinches his sixth championship with Bulls in 1998 NBA Finals Game 6."
+  }
+]
