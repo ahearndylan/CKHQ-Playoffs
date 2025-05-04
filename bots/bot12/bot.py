@@ -50,20 +50,21 @@ def get_top_playoff_scorers():
 
 def compose_tweet(top5):
     today = datetime.now().strftime("%B %d, %Y")
-
     tweet = f"👑🔥 Playoff Scoring Leaders ({today})\n\n"
-
     medals = ["🥇", "🥈", "🥉"]
 
     for idx, player in enumerate(top5, 1):
         name = player['PLAYER_NAME']
-        points = int(player['PTS'])  # total points scored
+        points = int(player['PTS'])
+        games = int(player['GP'])
+
+        line = f"{points} PTS ({games} GP)"
 
         if idx <= 3:
             medal = medals[idx-1]
-            tweet += f"{medal} {name} – {points} PTS\n"
+            tweet += f"{medal} {name} – {line}\n"
         else:
-            tweet += f"{idx}. {name} – {points} PTS\n"
+            tweet += f"{idx}. {name} – {line}\n"
 
     tweet += "\n#NBAPlayoffs #CourtKingsHQ"
     return tweet
