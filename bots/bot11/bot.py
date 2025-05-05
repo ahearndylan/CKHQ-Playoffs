@@ -1,3 +1,5 @@
+# === bot.py ===
+
 import tweepy
 from nba_api.stats.endpoints import leaguegamefinder, boxscoretraditionalv2
 from datetime import datetime, timedelta
@@ -45,11 +47,11 @@ def save_posted_series(posted):
 #     MAIN BOT LOGIC      #
 # ======================= #
 
-def get_recent_playoff_games(days_back=14):  # ✅ increased from 7 to 14
+def get_recent_playoff_games(days_back=15):  # was 14, now 15
     today = datetime.today()
     start_date = (today - timedelta(days=days_back)).strftime("%m/%d/%Y")
 
-    print(f"\n📅 Checking playoff games from the last {days_back} days (since {start_date})...\n")
+    print(f"\n🗕 Checking playoff games from the last {days_back} days (since {start_date})...\n")
 
     gamefinder = leaguegamefinder.LeagueGameFinder(
         season_type_nullable="Playoffs",
@@ -58,29 +60,51 @@ def get_recent_playoff_games(days_back=14):  # ✅ increased from 7 to 14
 
     games = gamefinder.get_normalized_dict()["LeagueGameFinderResults"]
 
+    print("🧪 DEBUG: Raw playoff games returned:\n")
+    for g in games:
+        print(f"{g['GAME_ID']} | {g['TEAM_ABBREVIATION']} | {g['MATCHUP']} | {g['PTS']} pts")
+    print("\n")
+
     return games
+
 
 def track_series(games):
     series = {}
+    games_by_id = {}
 
     for game in games:
-        team = game["TEAM_ABBREVIATION"]
-        matchup = game["MATCHUP"]
-        result = game["WL"]
+        game_id = game["GAME_ID"]
+        if game_id not in games_by_id:
+            games_by_id[game_id] = []
+        games_by_id[game_id].append(game)
+
+    for game_id, entries in games_by_id.items():
+        if len(entries) != 2:
+            continue
+
+        g1, g2 = entries[0], entries[1]
+
+        team1 = g1["TEAM_ABBREVIATION"]
+        team2 = g2["TEAM_ABBREVIATION"]
+        matchup = g1["MATCHUP"] if "@" in g1["MATCHUP"] else g2["MATCHUP"]
 
         opponents = matchup.replace("@", "vs.").split("vs.")
-        team1 = opponents[0].strip()
-        team2 = opponents[1].strip()
-        matchup_key = f"{team1} vs {team2}" if team1 < team2 else f"{team2} vs {team1}"
+        t1 = opponents[0].strip()
+        t2 = opponents[1].strip()
+        matchup_key = f"{t1} vs {t2}" if t1 < t2 else f"{t2} vs {t1}"
 
         if matchup_key not in series:
-            series[matchup_key] = {"teams": (team1, team2), "games": [], team1: 0, team2: 0}
+            series[matchup_key] = {"teams": (t1, t2), "games": [], t1: 0, t2: 0}
 
-        if result == "W":
-            series[matchup_key][team] += 1
+        score1 = g1["PTS"]
+        score2 = g2["PTS"]
 
-        # Save game ID for later boxscore pulling
-        series[matchup_key]["games"].append(game["GAME_ID"])
+        if score1 is None or score2 is None:
+            continue
+
+        winner = g1["TEAM_ABBREVIATION"] if score1 > score2 else g2["TEAM_ABBREVIATION"]
+        series[matchup_key][winner] += 1
+        series[matchup_key]["games"].append(game_id)
 
     return series
 
@@ -89,7 +113,7 @@ def calculate_series_leaders(game_ids):
 
     for game_id in game_ids:
         try:
-            time.sleep(0.5)  # Be nice to NBA API
+            time.sleep(0.5)
             boxscore = boxscoretraditionalv2.BoxScoreTraditionalV2(game_id=game_id)
             players = boxscore.get_normalized_dict()["PlayerStats"]
 
@@ -142,7 +166,7 @@ def calculate_series_leaders(game_ids):
     return leaders
 
 def compose_tweet(team_name, opponent, top_players, winner_wins, loser_wins):
-    tweet = f"""🏆 {team_name} defeat {opponent} {winner_wins}-{loser_wins} to advance! 👑
+    tweet = f"""\U0001f3c6 {team_name} defeat {opponent} {winner_wins}-{loser_wins} to advance! 👑
 
 🔥 Scoring King: {top_players['scoring']['name']} – {top_players['scoring']['stat']} PPG
 💪 Rebounding Beast: {top_players['rebounding']['name']} – {top_players['rebounding']['stat']} RPG
@@ -151,7 +175,6 @@ def compose_tweet(team_name, opponent, top_players, winner_wins, loser_wins):
 
 #NBAPlayoffs #CourtKingsHQ"""
     return tweet
-
 
 # ======================= #
 #         MAIN RUN        #
@@ -170,7 +193,7 @@ def run_bot():
         team2_wins = info[team2]
         game_ids = info["games"]
 
-        print(f"🧮 {matchup_key} — {team1} {team1_wins} vs {team2} {team2_wins}")
+        print(f"🧶 {matchup_key} — {team1} {team1_wins} vs {team2} {team2_wins}")
 
         if matchup_key in posted:
             print(f"✅ Already posted: {matchup_key}")
@@ -187,18 +210,15 @@ def run_bot():
         print(f"🎉 {winner} has won the series over {loser}!")
 
         top_players = calculate_series_leaders(game_ids)
-        winner_wins = info[winner]
-        loser_wins = info[loser]
-        tweet = compose_tweet(winner, loser, top_players, winner_wins, loser_wins)
+        tweet = compose_tweet(winner, loser, top_players, info[winner], info[loser])
 
-        print("\n📝 Final tweet to post:\n")
+        print("\n🖍️ Final tweet to post:\n")
         print(tweet + "\n")
 
         client.create_tweet(text=tweet)
 
         posted.append(matchup_key)
         save_posted_series(posted)
-
 
 if __name__ == "__main__":
     run_bot()
