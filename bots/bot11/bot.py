@@ -3,9 +3,24 @@
 import tweepy
 from nba_api.stats.endpoints import leaguegamefinder, boxscoretraditionalv2
 from datetime import datetime, timedelta
-import json
-import os
 import time
+from supabase import create_client, Client
+
+# ======================= #
+#     SUPABASE SETUP      #
+# ======================= #
+supabase_url = "https://fjtxowbjnxclzcogostk.supabase.co"
+supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqdHhvd2JqbnhjbHpjb2dvc3RrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2MDE5NTgsImV4cCI6MjA1ODE3Nzk1OH0.LPkFw-UX6io0F3j18Eefd1LmeAGGXnxL4VcCLOR_c1Q"
+supabase: Client = create_client(supabase_url, supabase_key)
+
+def load_posted_series():
+    res = supabase.table("seriesposted").select("series_id").execute()
+    if res.data:
+        return [item["series_id"] for item in res.data]
+    return []
+
+def save_posted_series(series_id):
+    supabase.table("seriesposted").insert({"series_id": series_id}).execute()
 
 # ======================= #
 # TWITTER AUTHENTICATION  #
@@ -24,34 +39,13 @@ client = tweepy.Client(
     access_token_secret=access_token_secret
 )
 
-POSTED_FILE = "posted_series.json"
-
-# ======================= #
-#    LOAD/SAVE HELPERS    #
-# ======================= #
-
-def load_posted_series():
-    if not os.path.exists(POSTED_FILE):
-        return []
-    with open(POSTED_FILE, "r") as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            return []
-
-def save_posted_series(posted):
-    with open(POSTED_FILE, "w") as f:
-        json.dump(posted, f, indent=2)
-
 # ======================= #
 #     MAIN BOT LOGIC      #
 # ======================= #
 
-def get_recent_playoff_games(days_back=15):  # was 14, now 15
-    today = datetime.today()
-    start_date = (today - timedelta(days=days_back)).strftime("%m/%d/%Y")
-
-    print(f"\n🗕 Checking playoff games from the last {days_back} days (since {start_date})...\n")
+def get_recent_playoff_games():
+    start_date = "04/19/2025"
+    print(f"\n🗕 Checking playoff games from {start_date} onward...\n")
 
     gamefinder = leaguegamefinder.LeagueGameFinder(
         season_type_nullable="Playoffs",
@@ -83,7 +77,6 @@ def track_series(games):
             continue
 
         g1, g2 = entries[0], entries[1]
-
         team1 = g1["TEAM_ABBREVIATION"]
         team2 = g2["TEAM_ABBREVIATION"]
         matchup = g1["MATCHUP"] if "@" in g1["MATCHUP"] else g2["MATCHUP"]
@@ -176,10 +169,6 @@ def compose_tweet(team_name, opponent, top_players, winner_wins, loser_wins):
 #NBAPlayoffs #CourtKingsHQ"""
     return tweet
 
-# ======================= #
-#         MAIN RUN        #
-# ======================= #
-
 def run_bot():
     print("🤖 Running Series Royalty Bot...")
 
@@ -216,9 +205,7 @@ def run_bot():
         print(tweet + "\n")
 
         client.create_tweet(text=tweet)
-
-        posted.append(matchup_key)
-        save_posted_series(posted)
+        save_posted_series(matchup_key)
 
 if __name__ == "__main__":
     run_bot()
