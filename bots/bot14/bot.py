@@ -1,4 +1,4 @@
-# bot.py — Game Final + Game Number Auto-Tweeter (Supabase + 1-Day Lookback)
+# bot.py — Game Final + Game Number Auto-Tweeter (Supabase + 1-Day Lookback + Series Record)
 
 import os
 from nba_api.stats.endpoints import scoreboardv2, boxscoresummaryv2, leaguegamefinder
@@ -35,7 +35,27 @@ client = tweepy.Client(
     access_token_secret=access_token_secret
 )
 
+TEAM_NAMES = {
+    "ATL": "Hawks", "BOS": "Celtics", "BKN": "Nets", "CHA": "Hornets", "CHI": "Bulls",
+    "CLE": "Cavaliers", "DAL": "Mavericks", "DEN": "Nuggets", "DET": "Pistons", "GSW": "Warriors",
+    "HOU": "Rockets", "IND": "Pacers", "LAC": "Clippers", "LAL": "Lakers", "MEM": "Grizzlies",
+    "MIA": "Heat", "MIL": "Bucks", "MIN": "Timberwolves", "NOP": "Pelicans", "NYK": "Knicks",
+    "OKC": "Thunder", "ORL": "Magic", "PHI": "76ers", "PHX": "Suns", "POR": "Trail Blazers",
+    "SAC": "Kings", "SAS": "Spurs", "TOR": "Raptors", "UTA": "Jazz", "WAS": "Wizards"
+}
+
 def get_series_game_number(team1, team2, current_game_id):
+    finder = leaguegamefinder.LeagueGameFinder(season_type_nullable="Playoffs")
+    all_games = finder.get_normalized_dict()["LeagueGameFinderResults"]
+    series_games = [
+        g for g in all_games
+        if current_game_id.startswith(g["GAME_ID"][:8])
+        and (g["MATCHUP"] == f"{team1} @ {team2}" or g["MATCHUP"] == f"{team2} @ {team1}")
+        and g["GAME_ID"] <= current_game_id
+    ]
+    return len(series_games)
+
+def get_series_record(team1, team2, current_game_id):
     finder = leaguegamefinder.LeagueGameFinder(season_type_nullable="Playoffs")
     all_games = finder.get_normalized_dict()["LeagueGameFinderResults"]
 
@@ -46,7 +66,42 @@ def get_series_game_number(team1, team2, current_game_id):
         and g["GAME_ID"] <= current_game_id
     ]
 
-    return len(series_games)
+    team1_wins = 0
+    team2_wins = 0
+
+    for g in series_games:
+        try:
+            game_summary = boxscoresummaryv2.BoxScoreSummaryV2(game_id=g["GAME_ID"])
+            linescore = game_summary.get_normalized_dict()["LineScore"]
+            if len(linescore) != 2:
+                continue
+
+            t1, t2 = linescore[0], linescore[1]
+            t1_abbr, t1_pts = t1["TEAM_ABBREVIATION"], t1["PTS"]
+            t2_abbr, t2_pts = t2["TEAM_ABBREVIATION"], t2["PTS"]
+
+            if t1_pts > t2_pts:
+                winner = t1_abbr
+            else:
+                winner = t2_abbr
+
+            if winner == team1:
+                team1_wins += 1
+            elif winner == team2:
+                team2_wins += 1
+        except Exception:
+            continue
+
+    name1 = TEAM_NAMES.get(team1, team1)
+    name2 = TEAM_NAMES.get(team2, team2)
+
+    if team1_wins > team2_wins:
+        return f"{name1} lead series {team1_wins}-{team2_wins} over {name2}"
+    elif team2_wins > team1_wins:
+        return f"{name2} lead series {team2_wins}-{team1_wins} over {name1}"
+    else:
+        return f"Series tied {team1_wins}-{team2_wins}"
+
 
 def run_bot():
     print("🤖 Running Game Final Score Bot...\n")
@@ -88,10 +143,13 @@ def run_bot():
             win_pts, lose_pts = t2_pts, t1_pts
 
         game_number = get_series_game_number(t1_abbr, t2_abbr, game_id)
+        series_record = get_series_record(t1_abbr, t2_abbr, game_id)
 
         tweet = f"""👑 NBA Playoffs – Game {game_number} Final 🏀
 
 {winner} def. {loser} {win_pts}-{lose_pts}  
+
+{series_record}
 
 #NBAPlayoffs #CourtKingsHQ"""
 
@@ -106,5 +164,8 @@ def run_bot():
 
     print("✅ Done.\n")
 
+# === Test Mode for Manual Check ===
 if __name__ == "__main__":
     run_bot()
+    # Manual test: print current GSW vs MIN series status
+    print(get_series_record("GSW", "MIN", "0042400231"))
