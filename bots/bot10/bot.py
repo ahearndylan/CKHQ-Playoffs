@@ -61,8 +61,30 @@ def run_bot():
     if event:
         tweet = compose_tweet(event)
         print("Tweeting:\n", tweet)
+
+        # Try to attach up to 4 images if available
+        media_ids = []
+        auth = tweepy.OAuth1UserHandler(api_key, api_secret, access_token, access_token_secret)
+        api_v1 = tweepy.API(auth)
+
+        for key in ["img", "img2", "img3", "img4"]:
+            if key in event:
+                image_path = os.path.join(os.path.dirname(__file__), "img", event[key])
+                if os.path.exists(image_path):
+                    try:
+                        media = api_v1.media_upload(image_path)
+                        media_ids.append(media.media_id)
+                    except Exception as e:
+                        print(f"⚠️ Failed to upload {event[key]}:", e)
+                else:
+                    print(f"⚠️ Image not found: {image_path}")
+
+        # Post tweet with or without images
         try:
-            client.create_tweet(text=tweet)
+            if media_ids:
+                client.create_tweet(text=tweet, media_ids=media_ids)
+            else:
+                client.create_tweet(text=tweet)
             print("✅ Tweet posted!")
         except Exception as e:
             print("❌ Failed to post tweet:", e)

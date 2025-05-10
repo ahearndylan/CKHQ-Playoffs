@@ -17,62 +17,76 @@
   {
     "date": "May 10",
     "year": 2012,
-    "event": "Led by Andre Iguodala’s 20 points, the 8-seed 76ers upset the 1-seed Bulls in Game 6 to win their first-round series. It marked the second straight year a No. 8 beat a No. 1 in Round 1."
+    "event": "Led by Andre Iguodala’s 20 points, the 8-seed 76ers upset the 1-seed Bulls in Game 6 to win their first-round series. It marked the second straight year a No. 8 beat a No. 1 in Round 1.",
+    "img": "iguodala.jpg"
   },
   {
     "date": "May 11",
     "year": 1992,
-    "event": "The Portland Trail Blazers defeated the host Phoenix Suns 153-151 in double-overtime in Game 4 of their Western Conference Semifinal Round series, the highest-scoring NBA Playoff game ever. The Blazers went on to win the series in five games."
+    "event": "The Portland Trail Blazers defeated the host Phoenix Suns 153-151 in double-overtime in Game 4 of their Western Conference Semifinal Round series, the highest-scoring NBA Playoff game ever. The Blazers went on to win the series in five games.",
+    "img": "img1.jpeg",
+    "img2": "img2.jpeg"
   },
   {
     "date": "May 12",
     "year": 2019,
-    "event": "Kawhi Leonard hit a shot from the corner over Joel Embiid at the buzzer that bounced off the rim four times before falling to give the Toronto Raptors a 92-90 victory over the 76ers on Sunday night in Game 7 of the Eastern Conference semifinal series."
+    "event": "Kawhi Leonard hit a shot from the corner over Joel Embiid at the buzzer that bounced off the rim four times before falling to give the Toronto Raptors a 92-90 victory over the 76ers on Sunday night in Game 7 of the Eastern Conference semifinal series.",
+    "img": "theshot.jpg"
   },
   {
     "date": "May 13",
     "year": 1999,
-    "event": "Philadelphia’s Allen Iverson recorded an NBA playoff-record 10 steals in a 97-85 win over the Orlando Magic."
+    "event": "Philadelphia’s Allen Iverson recorded an NBA playoff-record 10 steals in a 97-85 win over the Orlando Magic.",
+    "img": "iverson.jpg"
   },
   {
     "date": "May 14",
     "year": 1981,
-    "event": "Larry Bird scored 27 points and Cedric Maxwell added 19 to lead Boston to a 102-91 victory over Houston in Game 6 of the Finals, giving the Celtics their 14th NBA Championship."
+    "event": "Larry Bird scored 27 points and Cedric Maxwell added 19 to lead Boston to a 102-91 victory over Houston in Game 6 of the Finals, giving the Celtics their 14th NBA Championship.",
+    "img": "bird.jpg"
   },
   {
     "date": "May 15",
     "year": 1984,
-    "event": "Magic Johnson notched a playoff record 24 assists as the Lakers beat Phoenix 118-102 in Game 2 of the West Finals."
+    "event": "Magic Johnson notched a playoff record 24 assists as the Lakers beat Phoenix 118-102 in Game 2 of the West Finals.",
+    "img": "magic.jpg"
   },
   {
     "date": "May 16",
     "year": 1980,
-    "event": "Rookie guard Magic Johnson filled in at center for the injured Kareem Abdul-Jabbar and came up with 42 points, 15 rebounds and seven assists as the Los Angeles Lakers won the NBA title by beating Philadelphia 123-107 in Game 6 of the Finals."
+    "event": "Rookie guard Magic Johnson filled in at center for the injured Kareem Abdul-Jabbar and came up with 42 points, 15 rebounds and seven assists as the Los Angeles Lakers won the NBA title by beating Philadelphia 123-107 in Game 6 of the Finals.",
+    "img": "johnson.jpg"
   },
   {
     "date": "May 17",
     "year": 1983,
-    "event": "Michael Jordan knocks down a contested fadeaway at the buzzer in Game 4 over Gerald Wilkins to defeat the Cavs 103-101 in the Eastern Conference finals. With the win, the Bulls clinch their third straight NBA Finals berth."
+    "event": "Michael Jordan knocks down a contested fadeaway at the buzzer in Game 4 over Gerald Wilkins to defeat the Cavs 103-101 in the Eastern Conference finals. With the win, the Bulls clinch their third straight NBA Finals berth.",
+    "img": "img1.jpeg",
+    "img2": "img2.jpeg"
   },
   {
     "date": "May 18",
     "year": 1975,
-    "event": "Rick Barry hit a jumper with 38 seconds remaining to put Game 1 of the NBA Finals out of reach as Golden State defeated Washington 101-95."
+    "event": "Rick Barry hit a jumper with 38 seconds remaining to put Game 1 of the NBA Finals out of reach as Golden State defeated Washington 101-95.",
+    "img": "rick.jpg"
   },
   {
     "date": "May 20",
     "year": 2019,
-    "event": "A Game 4 win against the Portland Trail Blazers in the Western Conference finals sends the Golden State Warriors to The Finals for a fifth straight postseason. They join the 1960s Boston Celtics (10 total) as the only teams in NBA history to make The Finals in five consecutive seasons or more."
+    "event": "A Game 4 win against the Portland Trail Blazers in the Western Conference finals sends the Golden State Warriors to The Finals for a fifth straight postseason.",
+    "img": "nba.jpg"
   },
   {
     "date": "May 21",
     "year": 1991,
-    "event": "With a 105-97 win over the Detroit Pistons at Chicago Stadium in Game 2 of their Eastern Conference Final series, the Chicago Bulls set an NBA playoff record for consecutive wins at home with 15."
+    "event": "With a 105-97 win over the Detroit Pistons at Chicago Stadium in Game 2 of their Eastern Conference Final series, the Chicago Bulls set an NBA playoff record for consecutive wins at home with 15.",
+    "img": "mj3.jpg"
   },
   {
     "date": "May 22",
     "year": 1988,
-    "event": "Dominique Wilkins and Larry Bird traded bucket for bucket in the fourth quarter of Game 7 of the 1988 Eastern Conference Semifinals until Boston escaped with a 118-116 victory. Wilkins finished with 47 points and Bird had 34 — with 20 of his points tallied in the fourth quarter."
+    "event": "Dominique Wilkins and Larry Bird traded bucket for bucket in the fourth quarter of Game 7 of the 1988 Eastern Conference Semifinals until Boston escaped with a 118-116 victory. Wilkins finished with 47 points and Bird had 34 — with 20 of his points tallied in the fourth quarter.",
+    "img": "wilkins.jpg"
   },
   {
     "date": "May 25",
