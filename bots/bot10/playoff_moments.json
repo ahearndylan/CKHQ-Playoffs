@@ -2,17 +2,20 @@
   {
     "date": "May 4",
     "year": 1994,
-    "event": "Charles Barkley of Phoenix hit 23-of-31 field goal attempts and finished with 56 points, leading the visiting Suns to a 140-133 win over Golden State and a three-game sweep of their Western Conference First Round series."
+    "event": "Charles Barkley scored 56 points on 23-of-31 shooting as the Suns beat the Warriors 140–133 to complete a first-round sweep.",
+    "img": "charles.jpg"
   },
   {
     "date": "May 7",
     "year": 1995,
-    "event": "Reggie Miller scores 8 points in 9 seconds to stun the Knicks in 1995."
+    "event": "Reggie Miller scores 8 points in 9 seconds to stun the Knicks in 1995.",
+    "img": "miller.jpg"
   },
   {
     "date": "May 8",
     "year": 1988,
-    "event": "Michael Jordan scored 226 points in the Bulls’ five-game Eastern Conference first round series against Cleveland, breaking Bernard King’s record of 213 set in 1984."
+    "event": "Michael Jordan scored 226 points in the Bulls’ five-game Eastern Conference first round series against Cleveland, breaking Bernard King’s record of 213 set in 1984.",
+    "img": "jordan3.jpg"
   },
   {
     "date": "May 10",
@@ -23,14 +26,14 @@
   {
     "date": "May 11",
     "year": 1992,
-    "event": "The Portland Trail Blazers defeated the host Phoenix Suns 153-151 in double-overtime in Game 4 of their Western Conference Semifinal Round series, the highest-scoring NBA Playoff game ever. The Blazers went on to win the series in five games.",
+    "event": "The Blazers beat the Suns 153–151 in 2OT in Game 4 of the West Semis — the highest-scoring NBA Playoff game ever. Portland won the series in 5.",
     "img": "img1.jpeg",
     "img2": "img2.jpeg"
   },
   {
     "date": "May 12",
     "year": 2019,
-    "event": "Kawhi Leonard hit a shot from the corner over Joel Embiid at the buzzer that bounced off the rim four times before falling to give the Toronto Raptors a 92-90 victory over the 76ers on Sunday night in Game 7 of the Eastern Conference semifinal series.",
+    "event": "Kawhi Leonard’s iconic corner buzzer-beater over Joel Embiid bounced in after four rim bounces, lifting the Raptors to a 92–90 Game 7 win over the 76ers.",
     "img": "theshot.jpg"
   },
   {
@@ -54,13 +57,13 @@
   {
     "date": "May 16",
     "year": 1980,
-    "event": "Rookie guard Magic Johnson filled in at center for the injured Kareem Abdul-Jabbar and came up with 42 points, 15 rebounds and seven assists as the Los Angeles Lakers won the NBA title by beating Philadelphia 123-107 in Game 6 of the Finals.",
+    "event": "Rookie Magic Johnson filled in for Kareem at center and delivered 42 points, 15 boards, and 7 assists as the Lakers beat the Sixers 123–107 in Game 6 to win the title.",
     "img": "johnson.jpg"
   },
   {
     "date": "May 17",
     "year": 1983,
-    "event": "Michael Jordan knocks down a contested fadeaway at the buzzer in Game 4 over Gerald Wilkins to defeat the Cavs 103-101 in the Eastern Conference finals. With the win, the Bulls clinch their third straight NBA Finals berth.",
+    "event": "Michael Jordan hit a contested fadeaway at the buzzer over Gerald Wilkins to beat the Cavs 103–101 in Game 4, sending the Bulls to their third straight Finals.",
     "img": "img1.jpeg",
     "img2": "img2.jpeg"
   },
@@ -79,118 +82,144 @@
   {
     "date": "May 21",
     "year": 1991,
-    "event": "With a 105-97 win over the Detroit Pistons at Chicago Stadium in Game 2 of their Eastern Conference Final series, the Chicago Bulls set an NBA playoff record for consecutive wins at home with 15.",
+    "event": "The Bulls beat the Pistons 105–97 in Game 2 of the East Finals, setting an NBA playoff record with their 15th straight home win.",
     "img": "mj3.jpg"
   },
   {
     "date": "May 22",
     "year": 1988,
-    "event": "Dominique Wilkins and Larry Bird traded bucket for bucket in the fourth quarter of Game 7 of the 1988 Eastern Conference Semifinals until Boston escaped with a 118-116 victory. Wilkins finished with 47 points and Bird had 34 — with 20 of his points tallied in the fourth quarter.",
+    "event": "In a classic Game 7 duel, Dominique Wilkins (47 pts) and Larry Bird (34 pts, 20 in the 4th) traded shots before the Celtics edged the Hawks 118–116 in the 1988 East Semis.",
     "img": "wilkins.jpg"
   },
   {
     "date": "May 25",
     "year": 2002,
-    "event": "Paul Pierce outscores the New Jersey Nets 19-16 in the fourth quarter to help the Boston Celtics erase a 21-point deficit in Game 3 of the Eastern Conference Finals. The 94-90 victory remains the biggest comeback in NBA Playoff history."
+    "event": "Paul Pierce scored 19 in the 4th to outscore the Nets and erase a 21-point deficit, leading the Celtics to a 94–90 Game 3 win — the biggest comeback in NBA Playoff history.",
+    "img": "paul.jpg"
   },
   {
     "date": "May 27",
     "year": 1991,
-    "event": "The Chicago Bulls defeat the Detroit Pistons in Game 4 to clinch the franchise’s first trip to The Finals."
+    "event": "The Chicago Bulls defeat the Detroit Pistons in Game 4 to clinch the franchise’s first trip to The Finals.",
+    "img": "mj4.jpeg",
+    "img2": "mj5.jpeg"
   },
   {
     "date": "May 28",
     "year": 2016,
-    "event": "Golden State’s Klay Thompson sinks an NBA playoff-record 11 3-pointers to power the Warriors’ 108-101 comeback win against the Oklahoma City Thunder in Game 6 of the Western Conference finals."
+    "event": "Klay Thompson hit an NBA playoff-record 11 threes to lead the Warriors’ 108–101 comeback win over the Thunder in Game 6 of the West Finals.",
+    "img": "klay.jpg"
   },
   {
     "date": "May 31",
     "year": 2007,
-    "event": "Cleveland Cavaliers forward LeBron James scored the team’s final 25 points in a double-overtime win against the Detroit Pistons in Game 5 of the Eastern Conference finals."
+    "event": "Cleveland Cavaliers forward LeBron James scored the team’s final 25 points in a double-overtime win against the Detroit Pistons in Game 5 of the Eastern Conference finals.",
+    "img": "lebron.jpeg"
   },
   {
     "date": "June 1",
     "year": 1994,
-    "event": "Indiana’s Reggie Miller drilled an NBA playoffs record five 3-pointers in the fourth quarter of the Pacers’ 93-86 win over host New York in Game 5 of the Eastern Conference finals."
+    "event": "Indiana’s Reggie Miller drilled an NBA playoffs record five 3-pointers in the fourth quarter of the Pacers’ 93-86 win over host New York in Game 5 of the Eastern Conference finals.",
+    "img": "reggie.jpg"
   },
   {
     "date": "June 3",
     "year": 2018,
-    "event": "Golden State’s Stephen Curry nails nine 3-pointers in a 122-103 win in Game 2 vs. the Cleveland Cavaliers, breaking Ray Allen’s record for the most 3-pointers in an NBA Finals game."
+    "event": "Golden State’s Stephen Curry nails nine 3-pointers in a 122-103 win in Game 2 vs. the Cleveland Cavaliers, breaking Ray Allen’s record for the most 3-pointers in an NBA Finals game.",
+    "img": "curry.jpg"
   },
   {
     "date": "June 4",
     "year": 2000,
-    "event": "Down 15 points with 10:28 to go in Game 7 of the Western Conference finals, the Los Angeles Lakers stage an epic comeback against the Portland Trail Blazers. The Lakers outscore the Blazers 29-11 down the stretch, clinching the victory off a Kobe Bryant-to-Shaquille O’Neal alley-oop with 40 seconds left."
+    "event": "Down 15 in the 4th, the Lakers rally past the Blazers in Game 7 of the West Finals, sealing it with a Kobe-to-Shaq alley-oop with 40 seconds left.",
+    "img": "lakers.jpg",
+    "img2": "shaq.jpeg"
   },
   {
     "date": "June 5",
     "year": 1994,
-    "event": "New York, led by Patrick Ewing’s 24 points and 22 rebounds, defeated Indiana 94-90 at Madison Square Garden in Game 7 of the Eastern Conference Finals, sending the Knicks to the NBA Finals for the first time since 1973."
+    "event": "Patrick Ewing posted 24 points and 22 rebounds to lead the Knicks past the Pacers 94–90 in Game 7, sending New York to its first Finals since 1973.",
+    "img": "ewing.jpg"
   },
   {
     "date": "June 6",
     "year": 1982,
-    "event": "Philadelphia held Los Angeles center Kareem Abdul-Jabbar to his all-time playoff low of six points and trounced the Lakers 135-102 in Game 5 of the NBA Finals."
+    "event": "Philadelphia held Los Angeles center Kareem Abdul-Jabbar to his all-time playoff low of six points and trounced the Lakers 135-102 in Game 5 of the NBA Finals.",
+    "img": "kareem.jpg"
   },
   {
     "date": "June 7",
     "year": 1998,
-    "event": "The Chicago Bulls defeat the Utah Jazz 96-54 in the most lopsided game in the history of the NBA Finals. The 54 points by the Jazz is also an NBA record for fewest points in a game since the inception of the 24-second shot clock."
+    "event": "The Bulls crushed the Jazz 96–54 in the most lopsided NBA Finals game ever. Utah’s 54 points marked the fewest in the shot clock era.",
+    "img": "jordan.jpg"
   },
   {
     "date": "June 9",
     "year": 1970,
-    "event": "Jerry West hits a 60-foot shot to force overtime in 1970 NBA Finals Game 3."
+    "event": "Jerry West hits a 60-foot shot to force overtime in 1970 NBA Finals Game 3.",
+    "img": "jerry.jpeg"
   },
   {
     "date": "June 11",
     "year": 1997,
-    "event": "Michael Jordan's 'Flu Game' leads Bulls to victory in 1997 NBA Finals Game 5."
+    "event": "Michael Jordan's 'Flu Game' leads Bulls to victory in 1997 NBA Finals Game 5.",
+    "img": "flu1.jpg",
+    "img2": "flu3.jpg"
   },
   {
     "date": "June 12",
     "year": 1984,
-    "event": "Cedric Maxwell scored 24 points and Boston outrebounded Los Angeles 52-33 to beat the Lakers 111-102 in a Game 7 Finals showdown at Boston Garden, giving the Celtics their 15th NBA championship."
+    "event": "Cedric Maxwell scored 24 points as the Celtics beat the Lakers 111–102 in Game 7, securing their 15th NBA title at Boston Garden.",
+    "img": "celtics.jpg"
   },
   {
     "date": "June 13",
     "year": 1989,
-    "event": "The Detroit Pistons completed a Finals sweep of the Los Angeles Lakers with a 105-97 Game 4 victory, winning the first NBA title in franchise history."
+    "event": "The Detroit Pistons completed a Finals sweep of the Los Angeles Lakers with a 105-97 Game 4 victory, winning the first NBA title in franchise history.",
+    "img": "pistons.jpg"
   },
   {
     "date": "June 14",
     "year": 1998,
-    "event": "Michael Jordan clinches his sixth championship with Bulls in 1998 NBA Finals Game 6."
+    "event": "Michael Jordan clinches his sixth championship with Bulls in 1998 NBA Finals Game 6.",
+    "img": "jordan1.jpg",
+    "img2": "jordan2.jpg"
   },
   {
     "date": "June 15",
     "year": 2014,
-    "event": "Tim Duncan and the San Antonio Spurs win their fifth NBA title, defeating the Miami Heat 104-87 in Game 5 and taking The NBA Finals 4-1. Rising star Kawhi Leonard is the Finals MVP."
+    "event": "Tim Duncan and the San Antonio Spurs win their fifth NBA title, defeating the Miami Heat 104-87 in Game 5 and taking The NBA Finals 4-1. Rising star Kawhi Leonard is the Finals MVP.",
+    "img": "spurs.jpg"
   },
   {
     "date": "June 16",
     "year": 2015,
-    "event": "The Golden State Warriors close out the Cleveland Cavaliers in Game 6 of the 2015 Finals, 105-97, for the first championship for the Bay Area team since 1975. Andre Iguodala is the Finals MVP."
+    "event": "The Warriors beat the Cavs 105–97 in Game 6 of the 2015 Finals, winning their first title since 1975. Andre Iguodala was named Finals MVP.",
+    "img": "warriors.jpg"
   },
   {
     "date": "June 17",
     "year": 2008,
-    "event": "The Boston Celtics win their 17th NBA Championship, defeating the Lakers 4 games to 2. Boston’s 131-92 win in Game 6 is the most lopsided closeout win in NBA Finals history. Paul Pierce is named Finals MVP."
+    "event": "The Celtics won their 17th title by crushing the Lakers 131–92 in Game 6 — the most lopsided Finals closeout ever. Paul Pierce earned Finals MVP.",
+    "img": "paul1.jpg",
+    "img2": "kg.jpg"
   },
   {
     "date": "June 18",
     "year": 2013,
-    "event": "Ray Allen's clutch three-pointer forces overtime in 2013 NBA Finals Game 6."
+    "event": "Ray Allen's clutch three-pointer forces overtime in 2013 NBA Finals Game 6.",
+    "img": "ray.jpg"
   },
   {
     "date": "June 19",
     "year": 2000,
-    "event": "Shaquille O’Neal is named unanimous Most Valuable Player of NBA Finals 2000 following the Lakers’ 116-111 Game 6 victory, receiving all seven votes from a national media panel. O’Neal averaged 38 points, 16.7 rebounds and 2.67 blocks in the six-game Finals series."
+    "event": "Shaquille O’Neal won unanimous Finals MVP in 2000 after averaging 38 points and 16.7 rebounds in the Lakers’ 6-game win, capped by a 116–111 Game 6 victory.",
+    "img": "shaq2.jpg"
   },
   {
     "date": "June 20",
     "year": 2013,
-    "event": "LeBron James and the Miami Heat won their second straight NBA championship, taking an epic series 4-3 with a Game 7 win over the San Antonio Spurs, 95-88. LeBron was named Finals MVP for the second straight year."
+    "event": "LeBron James and the Heat won their second straight title, beating the Spurs 95–88 in Game 7. LeBron earned back-to-back Finals MVP honors.",
+    "img": "lebron2.jpg"
   }
 ]
