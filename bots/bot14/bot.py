@@ -35,6 +35,18 @@ client = tweepy.Client(
     access_token_secret=access_token_secret
 )
 
+TEAM_IMAGES = {
+    "BOS": "img/celtics.png",
+    "DEN": "img/nuggets.png",
+    "NYK": "img/knicks.png",
+    "OKC": "img/thunder.png",
+    "MIN": "img/timberwolves.png",
+    "GSW": "img/warriors.png",
+    "IND": "img/pacers.png",
+    "CLE": "img/cavs.png",
+}
+
+
 TEAM_NAMES = {
     "ATL": "Hawks", "BOS": "Celtics", "BKN": "Nets", "CHA": "Hornets", "CHI": "Bulls",
     "CLE": "Cavaliers", "DAL": "Mavericks", "DEN": "Nuggets", "DET": "Pistons", "GSW": "Warriors",
@@ -156,8 +168,15 @@ def run_bot():
         print("📝 TWEET:\n" + tweet + "\n")
 
         try:
-            client.create_tweet(text=tweet)
+            image_path = TEAM_IMAGES.get(winner)
+            if image_path and os.path.exists(image_path):
+                media = client.media_upload(filename=image_path)
+                client.create_tweet(text=tweet, media_ids=[media.media_id])
+            else:
+                client.create_tweet(text=tweet)
+
             save_posted_game(game_id)
+
         except Exception as e:
             print(f"❌ Failed to tweet game {game_id}: {e}")
             continue
