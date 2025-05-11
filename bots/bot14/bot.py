@@ -35,6 +35,10 @@ client = tweepy.Client(
     access_token_secret=access_token_secret
 )
 
+# Create v1.1 API (for image upload)
+auth = tweepy.OAuth1UserHandler(api_key, api_secret, access_token, access_token_secret)
+api = tweepy.API(auth)
+
 TEAM_IMAGES = {
     "BOS": "img/celtics.png",
     "DEN": "img/nuggets.png",
@@ -170,9 +174,10 @@ def run_bot():
         try:
             image_path = TEAM_IMAGES.get(winner)
             if image_path and os.path.exists(image_path):
-                media = client.media_upload(filename=image_path)
-                client.create_tweet(text=tweet, media_ids=[media.media_id])
+                media = api.media_upload(filename=image_path)
+                client.create_tweet(text=tweet, media_ids=[media.media_id_string])
             else:
+                print(f"⚠️ No valid image found for {winner}, posting tweet without image.")
                 client.create_tweet(text=tweet)
 
             save_posted_game(game_id)
@@ -186,5 +191,3 @@ def run_bot():
 # === Test Mode for Manual Check ===
 if __name__ == "__main__":
     run_bot()
-    # Manual test: print current GSW vs MIN series status
-    print(get_series_record("GSW", "MIN", "0042400231"))
