@@ -109,7 +109,7 @@ def run_bot():
     print(media_ids)
     print("\n=== END ===\n")
 
-    # Post to Twitter (uncomment to go live)
+    # Post to Twitter (uncomment to go live) deploy
     if media_ids:
         client.create_tweet(text=tweet, media_ids=media_ids)
     else:
