@@ -13,9 +13,7 @@ supabase: Client = create_client(supabase_url, supabase_key)
 
 def load_posted_games():
     res = supabase.table("postedgames").select("game_id").execute()
-    if res.data:
-        return [item["game_id"] for item in res.data]
-    return []
+    return [item["game_id"] for item in res.data] if res.data else []
 
 def save_posted_game(game_id):
     supabase.table("postedgames").insert({"game_id": game_id}).execute()
@@ -35,10 +33,10 @@ client = tweepy.Client(
     access_token_secret=access_token_secret
 )
 
-# Create v1.1 API (for image upload)
 auth = tweepy.OAuth1UserHandler(api_key, api_secret, access_token, access_token_secret)
 api = tweepy.API(auth)
 
+# === TEAM IMAGES ===
 TEAM_IMAGES = {
     "BOS": "img/celtics.png",
     "DEN": "img/nuggets.png",
@@ -47,9 +45,8 @@ TEAM_IMAGES = {
     "MIN": "img/timberwolves.png",
     "GSW": "img/warriors.png",
     "IND": "img/pacers.png",
-    "CLE": "img/cavs.png",
+    "CLE": "img/cavaliers.png"
 }
-
 
 TEAM_NAMES = {
     "ATL": "Hawks", "BOS": "Celtics", "BKN": "Nets", "CHA": "Hornets", "CHI": "Bulls",
@@ -87,25 +84,22 @@ def get_series_record(team1, team2, current_game_id):
 
     for g in series_games:
         try:
-            game_summary = boxscoresummaryv2.BoxScoreSummaryV2(game_id=g["GAME_ID"])
-            linescore = game_summary.get_normalized_dict()["LineScore"]
+            summary = boxscoresummaryv2.BoxScoreSummaryV2(game_id=g["GAME_ID"])
+            linescore = summary.get_normalized_dict()["LineScore"]
             if len(linescore) != 2:
                 continue
 
             t1, t2 = linescore[0], linescore[1]
-            t1_abbr, t1_pts = t1["TEAM_ABBREVIATION"], t1["PTS"]
-            t2_abbr, t2_pts = t2["TEAM_ABBREVIATION"], t2["PTS"]
-
-            if t1_pts > t2_pts:
-                winner = t1_abbr
+            if t1["PTS"] > t2["PTS"]:
+                winner = t1["TEAM_ABBREVIATION"]
             else:
-                winner = t2_abbr
+                winner = t2["TEAM_ABBREVIATION"]
 
             if winner == team1:
                 team1_wins += 1
             elif winner == team2:
                 team2_wins += 1
-        except Exception:
+        except:
             continue
 
     name1 = TEAM_NAMES.get(team1, team1)
@@ -118,7 +112,6 @@ def get_series_record(team1, team2, current_game_id):
     else:
         return f"Series tied {team1_wins}-{team2_wins}"
 
-
 def run_bot():
     print("🤖 Running Game Final Score Bot...\n")
 
@@ -127,16 +120,16 @@ def run_bot():
     today_str = today.strftime('%m/%d/%Y')
     yesterday_str = yesterday.strftime('%m/%d/%Y')
 
-    games_today = scoreboardv2.ScoreboardV2(game_date=today_str).get_normalized_dict()["GameHeader"]
-    games_yesterday = scoreboardv2.ScoreboardV2(game_date=yesterday_str).get_normalized_dict()["GameHeader"]
-    games = games_today + games_yesterday
+    games = (
+        scoreboardv2.ScoreboardV2(game_date=today_str).get_normalized_dict()["GameHeader"] +
+        scoreboardv2.ScoreboardV2(game_date=yesterday_str).get_normalized_dict()["GameHeader"]
+    )
 
     posted = load_posted_games()
 
     for g in games:
         game_id = g["GAME_ID"]
-        status = g.get("GAME_STATUS_TEXT", "").lower()
-        if game_id in posted or "final" not in status:
+        if game_id in posted or "final" not in g.get("GAME_STATUS_TEXT", "").lower():
             continue
 
         print(f"📦 Fetching summary for game ID: {game_id}...")
@@ -172,12 +165,20 @@ def run_bot():
         print("📝 TWEET:\n" + tweet + "\n")
 
         try:
-            image_path = TEAM_IMAGES.get(winner)
-            if image_path and os.path.exists(image_path):
-                media = api.media_upload(filename=image_path)
-                client.create_tweet(text=tweet, media_ids=[media.media_id_string])
+            image_file = TEAM_IMAGES.get(winner)
+            if image_file:
+                base_dir = os.path.dirname(os.path.abspath(__file__))
+                image_path = os.path.join(base_dir, image_file)
+
+                print(f"🖼️ Checking for image at: {image_path}")
+                if os.path.exists(image_path):
+                    media = api.media_upload(filename=image_path)
+                    client.create_tweet(text=tweet, media_ids=[media.media_id_string])
+                else:
+                    print(f"⚠️ Image file not found at {image_path}")
+                    client.create_tweet(text=tweet)
             else:
-                print(f"⚠️ No valid image found for {winner}, posting tweet without image.")
+                print(f"⚠️ No image mapping for team {winner}")
                 client.create_tweet(text=tweet)
 
             save_posted_game(game_id)
@@ -188,6 +189,5 @@ def run_bot():
 
     print("✅ Done.\n")
 
-# === Test Mode for Manual Check ===
 if __name__ == "__main__":
     run_bot()
