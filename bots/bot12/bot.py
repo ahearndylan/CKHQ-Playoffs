@@ -73,9 +73,16 @@ def compose_tweet(top5):
 
 def get_top3_media_ids(top3):
     media_ids = []
+    # Get absolute path to current script directory
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    img_dir = os.path.join(base_dir, "img")
+
     for player in top3:
         first_name = player['PLAYER_NAME'].split()[0].lower()
-        image_path = f"img/{first_name}.png"
+        image_path = os.path.join(img_dir, f"{first_name}.png")
+
+        print(f"🔍 Looking for image at: {image_path}")
+
         if os.path.exists(image_path):
             try:
                 media = api_v1.media_upload(filename=image_path)
@@ -86,6 +93,7 @@ def get_top3_media_ids(top3):
         else:
             print(f"⚠️ Image not found: {image_path}")
     return media_ids
+
 
 # ======================= #
 #        MAIN RUN         #
