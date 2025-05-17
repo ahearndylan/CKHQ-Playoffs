@@ -8,6 +8,7 @@ import tweepy
 #      TWITTER AUTH SETUP     #
 # ============================ #
 
+
 bearer_token = "AAAAAAAAAAAAAAAAAAAAAPztzwEAAAAAvBGCjApPNyqj9c%2BG7740SkkTShs%3DTCpOQ0DMncSMhaW0OA4UTPZrPRx3BHjIxFPzRyeoyMs2KHk6hM"
 api_key = "uKyGoDr5LQbLvu9i7pgFrAnBr"
 api_secret = "KGBVtj1BUmAEsyoTmZhz67953ItQ8TIDcChSpodXV8uGMPXsoH"
