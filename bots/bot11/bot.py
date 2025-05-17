@@ -5,6 +5,9 @@ from nba_api.stats.endpoints import leaguegamefinder, boxscoretraditionalv2
 from datetime import datetime, timedelta
 import time
 from supabase import create_client, Client
+import os
+from tweepy import API, OAuth1UserHandler
+
 
 # ======================= #
 #     SUPABASE SETUP      #
@@ -39,6 +42,10 @@ client = tweepy.Client(
     access_token_secret=access_token_secret
 )
 
+# Auth for v1.1 media upload
+auth = OAuth1UserHandler(api_key, api_secret, access_token, access_token_secret)
+api_v1 = API(auth)
+
 # ======================= #
 #     MAIN BOT LOGIC      #
 # ======================= #
@@ -61,6 +68,15 @@ def get_recent_playoff_games():
 
     return games
 
+def find_matching_image(player_names):
+    folder = "img"
+    for name in player_names:
+        first = name.split()[0].lower()
+        filename = f"{first}.png"
+        path = os.path.join(folder, filename)
+        if os.path.exists(path):
+            return path  # Return first match
+    return None  # No image found
 
 def track_series(games):
     series = {}
@@ -204,7 +220,24 @@ def run_bot():
         print("\n🖍️ Final tweet to post:\n")
         print(tweet + "\n")
 
-        client.create_tweet(text=tweet)
+        # Try to attach a headshot image
+        player_names = [
+            top_players["scoring"]["name"],
+            top_players["rebounding"]["name"],
+            top_players["assists"]["name"],
+            top_players["defense"]["name"]
+        ]
+        image_path = find_matching_image(player_names)
+
+        try:
+            if image_path:
+                media = api_v1.media_upload(image_path)
+                client.create_tweet(text=tweet, media_ids=[media.media_id])
+            else:
+                client.create_tweet(text=tweet)
+        except Exception as e:
+            print(f"❌ Error posting tweet: {e}")
+
         save_posted_series(matchup_key)
 
 if __name__ == "__main__":
